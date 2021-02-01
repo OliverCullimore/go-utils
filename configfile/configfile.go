@@ -8,32 +8,32 @@ import (
 )
 
 // Save function
-func Save(filename string, conf interface{}) error {
-	bytes, err := json.MarshalIndent(conf, "", "  ")
+func Save(filename string, config interface{}) error {
+	// Parse config interface into JSON
+	bytes, err := json.MarshalIndent(config, "", "  ")
 	if err != nil {
 		return err
 	}
-
+	// Write JSON to file
 	return ioutil.WriteFile(filename, bytes, 0644)
 }
 
 // Load function
-func Load(filename string) (interface{}, error) {
+func Load(filename string, config interface{}) error {
 	// Check file exists
 	info, err := os.Stat(filename)
 	if os.IsNotExist(err) || info.IsDir() {
-		return nil, errors.New("file not found")
+		return errors.New("file not found")
 	}
+	// Read JSON file contents
 	bytes, err := ioutil.ReadFile(filename)
 	if err != nil {
-		return nil, errors.New("error loading file")
+		return err
 	}
-
-	var configuration interface{}
-	err = json.Unmarshal(bytes, &configuration)
+	// Parse JSON into config interface
+	err = json.Unmarshal(bytes, config)
 	if err != nil {
-		return nil, err
+		return err
 	}
-
-	return configuration, nil
+	return nil
 }
