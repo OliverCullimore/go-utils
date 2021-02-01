@@ -3,6 +3,7 @@ package configfile
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"os"
 )
@@ -25,7 +26,7 @@ func Load(filename string, config interface{}) error {
 	// Check file exists
 	info, err := os.Stat(filename)
 	if os.IsNotExist(err) || info.IsDir() {
-		return errors.New("file not found")
+		return errors.New(fmt.Sprintf("config file %s not found", filename))
 	}
 	// Read JSON file contents
 	bytes, err := ioutil.ReadFile(filename)
