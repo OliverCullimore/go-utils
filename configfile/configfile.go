@@ -7,7 +7,8 @@ import (
 	"os"
 )
 
-// Save function
+// Save function accepts a filename and a config interface
+// to parse the config data from
 func Save(filename string, config interface{}) error {
 	// Parse config interface into JSON
 	bytes, err := json.MarshalIndent(config, "", "  ")
@@ -18,7 +19,8 @@ func Save(filename string, config interface{}) error {
 	return ioutil.WriteFile(filename, bytes, 0644)
 }
 
-// Load function
+// Load function accepts a filename and a config interface
+// to parse the config data into
 func Load(filename string, config interface{}) error {
 	// Check file exists
 	info, err := os.Stat(filename)
