@@ -39,6 +39,7 @@ func Load(filename string, config interface{}) error {
 		if err != nil {
 			return err
 		}
+		return nil
 	}
-	return nil
+	return err
 }
