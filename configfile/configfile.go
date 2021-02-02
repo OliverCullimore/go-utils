@@ -28,15 +28,17 @@ func Load(filename string, config interface{}) error {
 	if os.IsNotExist(err) || info.IsDir() {
 		return errors.New(fmt.Sprintf("config file %s not found", filename))
 	}
-	// Read JSON file contents
-	bytes, err := ioutil.ReadFile(filename)
-	if err != nil {
-		return err
-	}
-	// Parse JSON into config interface
-	err = json.Unmarshal(bytes, config)
-	if err != nil {
-		return err
+	if err == nil {
+		// Read JSON file contents
+		bytes, err := ioutil.ReadFile(filename)
+		if err != nil {
+			return err
+		}
+		// Parse JSON into config interface
+		err = json.Unmarshal(bytes, config)
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }
