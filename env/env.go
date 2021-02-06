@@ -2,6 +2,7 @@ package env
 
 import (
 	"errors"
+	"fmt"
 	"github.com/joho/godotenv"
 	"os"
 )
@@ -14,11 +15,11 @@ func Load(envFile string) error {
 	// Check file exists
 	info, err := os.Stat(envFile)
 	if os.IsNotExist(err) || info.IsDir() {
-		return errors.New("file not found")
+		return errors.New(fmt.Sprintf("file %s not found", envFile))
 	}
 	envVars, err = godotenv.Read()
 	if err != nil {
-		return errors.New("error loading file")
+		return errors.New(fmt.Sprintf("error loading %s file", envFile))
 	}
 	return nil
 }
